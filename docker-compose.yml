@@ -1,0 +1,21 @@
+services:
+  shopvue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: shopvue-app
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    labels:
+      - "com.shopvue.description=ShopVue Frontend Technical Test"
+      - "com.shopvue.version=1.0.0"
