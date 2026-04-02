@@ -6,6 +6,15 @@
   --font-sans: 'Inter', system-ui, sans-serif;
 }
 
+/*
+ * FIX: Tailwind v4 mendefinisikan --spacing via @layer properties dengan @supports
+ * yang tidak selalu berjalan di semua environment (terutama production/Docker).
+ * Override eksplisit di :root memastikan semua calc(var(--spacing) * N) bekerja.
+ */
+:root {
+  --spacing: 0.25rem;
+}
+
 /* * {
   margin: 0;
   padding: 0;
@@ -83,6 +92,22 @@ html.dark body {
 .input-field.error {
   @apply border-rose-500 bg-rose-50 dark:bg-rose-500/10 ring-rose-500/10;
 }
+
+/*
+ * FIX: Explicit pixel-based padding untuk input dengan icon.
+ * Menghindari ketergantungan pada CSS custom property --spacing
+ * yang mungkin tidak teraplikasi dengan benar di semua browser.
+ */
+.input-field.pl-10,
+.input-field[class*="pl-10"] {
+  padding-left: 2.5rem !important;
+}
+
+.input-field.pr-10,
+.input-field[class*="pr-10"] {
+  padding-right: 2.5rem !important;
+}
+
 
 /* Scrollbar */
 ::-webkit-scrollbar {
