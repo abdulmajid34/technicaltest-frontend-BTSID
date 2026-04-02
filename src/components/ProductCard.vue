@@ -1,5 +1,5 @@
 <template>
-  <article class="glass-card overflow-hidden group flex flex-col h-full bg-white dark:bg-white/5" :id="`product-card-${product.id}`">
+  <router-link :to="'/products/' + product.slug" class="glass-card overflow-hidden group flex flex-col h-full bg-white dark:bg-white/5 w-full" :id="`product-card-${product.id}`">
     <!-- Image block -->
     <div class="relative overflow-hidden h-52 bg-slate-100 dark:bg-indigo-900/20 shrink-0">
       <img
@@ -32,7 +32,7 @@
         {{ product.category?.name || '-' }}
       </p>
     </div>
-  </article>
+  </router-link>
 </template>
 
 <script setup>
