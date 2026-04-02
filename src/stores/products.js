@@ -16,8 +16,9 @@ export const useProductStore = defineStore('products', () => {
 
   const filteredProducts = computed(() => {
     if (!searchQuery.value) return products.value
+    // FIX: Cari di allProducts (semua produk), bukan hanya products (halaman saat ini)
     const q = searchQuery.value.toLowerCase()
-    return products.value.filter((p) =>
+    return allProducts.value.filter((p) =>
       p.title.toLowerCase().includes(q)
     )
   })
@@ -57,8 +58,9 @@ export const useProductStore = defineStore('products', () => {
 
   async function createProduct(payload) {
     const { data } = await api.post('/products/', payload)
-    // Prepend to local list without full reload
+    // FIX: Prepend ke KEDUA list agar produk baru langsung bisa ditemukan saat search
     products.value.unshift(data)
+    allProducts.value.unshift(data)
     totalItems.value += 1
     return data
   }
